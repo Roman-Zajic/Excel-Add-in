@@ -1,58 +1,32 @@
-# Manual Excel Ribbon Add-In Boilerplate
 
-This repository demonstrates how to create a modern Excel Add-in (`.xlam`) with a custom Ribbon UI by manually editing the file's XML structure.
+# Mastering the Excel Ribbon
 
-## 1. Create the Add-In & Macro
-1. Open Excel and create a new workbook.
-2. Press `Alt + F11` to open the VBA Editor.
-3. Insert a new Module (`Insert > Module`) and paste the following:
-```vba
-' The (control As IRibbonControl) parameter is mandatory for Ribbon callbacks
-Public Sub MyRibbonMacro(control As IRibbonControl)
-    MsgBox "Add-in macro executed successfully!", vbInformation, "Success"
-End Sub
-```
-4. Save the file as **MyAddIn.xlam**.
-5. Close Excel.
+Welcome to the complete guide on building modern Microsoft Excel Add-ins (`.xlam`) from scratch. 
 
-## 2. Create the Custom UI
-1. Rename `MyAddIn.xlam` to `MyAddIn.zip`.
-2. Open the ZIP and create a new folder named `customUI`.
-3. Inside the `customUI` folder, create a file named `customUI14.xml` with this content:
-```xml
-<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui">
-  <ribbon>
-    <tabs>
-      <tab id="CustomTab" label="MY TOOLS">
-        <group id="Group1" label="General">
-          <button id="Btn1" label="Run Macro" size="large" onAction="MyRibbonMacro" imageMso="HappyFace" />
-        </group>
-      </tab>
-    </tabs>
-  </ribbon>
-</customUI>
-```
+## Project Overview
+The goal of this project is to demystify how the Office Fluent UI works. By the end of this guide, you will be able to create custom tabs, groups, and interactive controls that call VBA macros to automate your daily workflow.
 
-## 3. Link the UI in Relationships
-1. Inside the ZIP, open `_rels/.rels`.
-2. Add this line inside the `<Relationships>` tag before the closing `</Relationships>`:
-```xml
-<Relationship Id="R12345" Type="http://schemas.microsoft.com/office/2007/relationships/ui/extensibility" Target="customUI/customUI14.xml"/>
-```
+### Key Features
+- **Pure OpenXML:** Learn the internal architecture of `.xlam` files.
+- **Custom UI:** Create professional-looking Ribbon tabs.
+- **Dynamic Logic:** Make buttons that react to workbook changes.
+- **Zero Dependencies:** Use only a text editor and a ZIP utility.
 
-## 4. Define Content Types
-1. In the root of the ZIP, open `[Content_Types].xml`.
-2. Add this line inside the `<Types>` tag:
-```xml
-<Override PartName="/customUI/customUI14.xml" ContentType="application/xml"/>
-```
+---
 
-## 5. Finalize
-1. Save and update all files inside the ZIP.
-2. Rename `MyAddIn.zip` back to `MyAddIn.xlam`.
-3. In Excel, go to **File > Options > Add-ins > Go...** and browse for your file.
-4. The **"MY TOOLS"** tab will now appear in your Ribbon.
+## Table of Contents
 
-## Troubleshooting
-If the tab does not appear, enable error reporting:
-- **File > Options > Advanced > General > Show add-in user interface errors**.
+1.  **[Chapter 1: The Architecture](./01%20Architecture.md)**  
+    Learn how an Excel file is structured internally and how to "wire" your XML into the ZIP archive.
+2.  **[Chapter 2: Layout & Visuals](./02%20Layout%20and%20Visuals.md)**  
+    Understand the Ribbon hierarchy (Tabs > Groups > Controls) and how to use built-in Office icons (`imageMso`).
+3.  **[Chapter 3: The Callback System](./03%20Callback%20System.md)**  
+    Connect your XML buttons to VBA macros using the mandatory callback signatures.
+4.  **[Chapter 4: The Dynamic Ribbon](./04%20The%20Dynamic%20Ribbon%20.md)**  
+    Master the `Invalidate` command to refresh the UI and create buttons that enable/disable based on logic.
+5.  **[Chapter 5: Advanced Controls](./05%20Advanced%20Control%20Types.md)**  
+    Implement Menus, Checkboxes, EditBoxes, and SplitButtons to create complex user interfaces.
+6.  **[Chapter 6: Reference Appendix](./06%20Reference%20Appendix.md)**  
+    A cheat sheet for common `imageMso` IDs, XML snippets, and VBA callback signatures.
+
+---
